@@ -11,6 +11,11 @@
                 <div><strong>Content: </strong> {!! $post->content !!}</div>
                 <div><strong>Category: </strong> {{$post->category->name}}</div>
                 <div><strong>Slug: </strong> {{$post->slug}}</div>
+                <div>
+                    @foreach ($post->tags as $tag)
+                        <span class="badge badge-primary">{{$tag->name}}</span>
+                    @endforeach
+                </div>
             </div>
 
             <a href="{{route('admin.posts.index')}}" class="btn btn-primary">Go back</a>
