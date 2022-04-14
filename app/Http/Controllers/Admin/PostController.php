@@ -46,7 +46,8 @@ class PostController extends Controller
             [
                 'title' => 'required|min:5',
                 'content' => 'required|min:20',
-                'category_id' => 'nullable|exists:categories,id'
+                'category_id' => 'nullable|exists:categories,id',
+                'tags' => 'nullable|exists:tags,id'
             ]
         );
 
@@ -66,6 +67,8 @@ class PostController extends Controller
         $post = new Post();
         $post->fill($data);
         $post->save();
+
+        $post->tags()->sync($data['tags']);
 
         return redirect()->route('admin.posts.index');
     }
@@ -90,7 +93,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories'));
+        $tags = Tag::all();
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -106,7 +110,8 @@ class PostController extends Controller
             [
                 'title' => 'required|min:5',
                 'content' => 'required|min:20',
-                'category_id' => 'nullable|exists:categories,id'
+                'category_id' => 'nullable|exists:categories,id',
+                'tags' => 'nullable|exists:tags,id'
             ]
         );
 
@@ -127,6 +132,8 @@ class PostController extends Controller
 
         $post->update($data);
         $post->save();
+
+        $post->tags()->sync($data['tags']);
 
         return redirect()->route('admin.posts.index');
 
