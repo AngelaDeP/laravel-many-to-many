@@ -29,6 +29,13 @@
                         </select>
                     </div>
 
+                    @foreach ($tags as $tag)
+                        <div class="custom-control custom-checkbox">
+                            <input name="tags[]" type="checkbox" class="custom-control-input" id="tag_{{$tag->id}}" value="{{$tag->id}} {{in_array($tag->id, old('tags', []))?'checked':''}}">
+                            <label class="custom-control-label" for="tag_{{$tag->id}}">{{$tag->name}}</label>
+                        </div>
+                    @endforeach
+
                     <div class="form-group">
                         <label for="content">Post Content</label>
                         <textarea class="form-control" id="content" rows="10" name="content">{{ old('content') }}</textarea>
